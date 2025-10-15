@@ -1,0 +1,65 @@
+/* src/home.css */
+
+.container {
+  width: 90%;
+  margin: 30px auto;
+  text-align: center;
+  font-family: "Poppins", sans-serif;
+}
+
+h1 {
+  color: #c04b2d;
+  margin-bottom: 20px;
+}
+
+.form {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #c04b2d;
+  color: white;
+  font-weight: 600;
+}
+
+button:hover {
+  background-color: #a03b24;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 10px;
+}
+
+th {
+  background-color: #f5c19b;
+  color: #5a1e0c;
+}
+
+.edit {
+  background-color: #28a745;
+  margin-right: 5px;
+}
+
+.delete {
+  background-color: #dc3545;
+}

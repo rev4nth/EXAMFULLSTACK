@@ -1,0 +1,43 @@
+package com.exam.in.service;
+
+import com.exam.in.model.*;
+import com.exam.in.repository.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import java.util.List;
+
+@Service
+public class BakeryItemService {
+
+    @Autowired
+    private BakeryItemRepository repository;
+
+    public List<BakeryItem> getAllItems() {
+        return repository.findAll();
+    }
+
+    public BakeryItem getItemById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    public BakeryItem addItem(BakeryItem item) {
+        return repository.save(item);
+    }
+
+    public BakeryItem updateItem(Long id, BakeryItem itemDetails) {
+        BakeryItem item = repository.findById(id).orElse(null);
+        if (item != null) {
+            item.setItemName(itemDetails.getItemName());
+            item.setPrice(itemDetails.getPrice());
+            item.setCategory(itemDetails.getCategory());
+            item.setQuantity(itemDetails.getQuantity());
+            return repository.save(item);
+        }
+        return null;
+    }
+
+    public String deleteItem(Long id) {
+        repository.deleteById(id);
+        return "Item deleted successfully";
+    }
+}

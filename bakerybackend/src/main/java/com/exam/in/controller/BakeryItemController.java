@@ -1,0 +1,44 @@
+package com.exam.in.controller;
+
+import com.exam.in.*;
+import com.exam.in.model.BakeryItem;
+import com.exam.in.service.BakeryItemService;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/items")
+@CrossOrigin(origins = "http://localhost:5173")
+
+public class BakeryItemController {
+
+    @Autowired
+    private BakeryItemService service;
+
+    @GetMapping
+    public List<BakeryItem> getAllItems() {
+        return service.getAllItems();
+    }
+
+    @GetMapping("/{id}")
+    public BakeryItem getItemById(@PathVariable Long id) {
+        return service.getItemById(id);
+    }
+
+    @PostMapping
+    public BakeryItem addItem(@RequestBody BakeryItem item) {
+        return service.addItem(item);
+    }
+
+    @PutMapping("/{id}")
+    public BakeryItem updateItem(@PathVariable Long id, @RequestBody BakeryItem item) {
+        return service.updateItem(id, item);
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteItem(@PathVariable Long id) {
+        return service.deleteItem(id);
+    }
+}
