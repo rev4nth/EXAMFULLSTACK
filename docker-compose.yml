@@ -1,0 +1,41 @@
+services:
+  mysql-db:
+    image: mysql:8
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: docker
+      MYSQL_DATABASE: studentdb
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pdocker"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    container_name: springboot
+    build:
+      context: ./bakerybackend
+      dockerfile: backend.dockerfile
+    ports:
+      - "2025:2000"
+    depends_on:
+      mysql-db:
+        condition: service_healthy
+    restart: on-failure
+
+  frontend:
+    container_name: react
+    build:
+      context: ./bakeryfrontend
+      dockerfile: frontend.dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:
