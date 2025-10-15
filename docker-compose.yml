@@ -6,38 +6,38 @@ services:
     container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: docker
-      MYSQL_DATABASE: studentdb   # your DB name
+      MYSQL_DATABASE: backerydb
     ports:
-      - "3307:3306"              # host:container
+      - "3307:3306"
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
-      - fullstack-net
+      - bakery-net
 
   backend:
-    image: 2300090029/docker-backend:latest
+    image: 2300090029/docker-bakery-backend:latest
     container_name: springboot
     ports:
-      - "2025:2000"              # host:container
+      - "2025:2000"
     depends_on:
       - mysqldb
     restart: on-failure
     networks:
-      - fullstack-net
+      - bakery-net
 
   frontend:
-    image: 2300090029/docker-frontend:latest
+    image: 2300090029/docker-bakery-frontend:latest
     container_name: react
     ports:
-      - "3000:80"                # host:container
+      - "3000:80"
     depends_on:
       - backend
     restart: on-failure
     networks:
-      - fullstack-net
+      - bakery-net
 
 volumes:
   mysql-data:
 
 networks:
-  fullstack-net:
+  bakery-net:
