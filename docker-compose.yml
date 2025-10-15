@@ -1,41 +1,43 @@
+version: '3.9'
+
 services:
-  mysql-db:
+  mysqldb:
     image: mysql:8
     container_name: mysql-db
     environment:
       MYSQL_ROOT_PASSWORD: docker
-      MYSQL_DATABASE: studentdb
+      MYSQL_DATABASE: studentdb   # your DB name
     ports:
-      - "3307:3306"
+      - "3307:3306"              # host:container
     volumes:
       - mysql-data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-pdocker"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+    networks:
+      - fullstack-net
 
   backend:
+    image: 2300090029/docker-backend:latest
     container_name: springboot
-    build:
-      context: ./bakerybackend
-      dockerfile: backend.dockerfile
     ports:
-      - "2025:2000"
+      - "2025:2000"              # host:container
     depends_on:
-      mysql-db:
-        condition: service_healthy
+      - mysqldb
     restart: on-failure
+    networks:
+      - fullstack-net
 
   frontend:
+    image: 2300090029/docker-frontend:latest
     container_name: react
-    build:
-      context: ./bakeryfrontend
-      dockerfile: frontend.dockerfile
     ports:
-      - "3000:80"
+      - "3000:80"                # host:container
     depends_on:
       - backend
+    restart: on-failure
+    networks:
+      - fullstack-net
 
 volumes:
   mysql-data:
+
+networks:
+  fullstack-net:
