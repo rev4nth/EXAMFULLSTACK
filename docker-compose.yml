@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   mysqldb:
     image: mysql:8
@@ -12,7 +10,7 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
     networks:
-      - bakery-net
+      - springboot-mysql-net
 
   backend:
     image: 2300090029/docker-bakery-backend:latest
@@ -23,7 +21,7 @@ services:
       - mysqldb
     restart: on-failure
     networks:
-      - bakery-net
+      -springboot-mysql-net
 
   frontend:
     image: 2300090029/docker-bakery-frontend:latest
@@ -34,10 +32,10 @@ services:
       - backend
     restart: on-failure
     networks:
-      - bakery-net
+      - springboot-mysql-net
 
 volumes:
   mysql-data:
 
 networks:
-  bakery-net:
+  springboot-mysql-net:
